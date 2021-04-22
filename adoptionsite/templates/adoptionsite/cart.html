@@ -1,0 +1,52 @@
+{% extends "adoptionsite/base_template.html" %}
+
+{% block title %}
+    Cart
+{% endblock title %}
+
+{% block content %}
+    <h1>Cart</h1>
+
+    <table class='table table-striped'>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Increment</th>
+                <th>Decrement</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if cart_items %}
+                {% for cart_item in cart_items %}
+                    <form method="post" action="{% url 'AdjustCartItemQuantity' cart_item.id %}">
+                        {% csrf_token %}
+
+                        <tr key={{ cart_item.id }}>
+                            <td>
+                                {{ cart_item.id }}
+                            </td>
+                            <td>
+                                {{ cart_item.name }}
+                            </td>
+                            <td>
+                                {{ cart_item.quantity }}
+                            </td>
+                            <td>
+                                <button name="action" value="increment" type="submit">
+                                    +
+                                </button>
+                            </td>
+                            <td>
+                                <button name="action" value="decrement" type="submit">
+                                    -
+                                </button>
+                            </td>
+                        </tr>
+                    </form>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock content %}

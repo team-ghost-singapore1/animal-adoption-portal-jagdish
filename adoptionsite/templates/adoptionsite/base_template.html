@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            {% block title %}{{ title }}{% endblock %} - Tailspin Animal Adoptions
+        </title>
+
+        {% load static %}
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel='shortcut icon' type='image/x-icon' href="{% static 'adoptionsite/favicon.ico' %}" />
+
+        <link rel="stylesheet" href="{% static 'adoptionsite/libs/bootstrap/distr/css/bootstrap.min.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'adoptionsite/site.css' %}">
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                {% with is_authenticated=user.is_authenticated %}
+                {% with username=user.username %}
+
+                    <div class="container">
+                        <a class="navbar-brand" href="{% url 'Index' %}">Animal Adoption Portal</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="{% url 'Index' %}">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="{% url 'Cart' %}">Cart</a>
+                                </li>
+                                {% if is_authenticated %}
+                                    <li class="nav-item">
+                                        <!-- logout url as per https://learndjango.com/tutorials/django-login-and-logout-tutorial -->
+                                        <a class="nav-link text-dark" href="{% url 'logout' %}">Logout</a>
+                                    </li>
+                                {% else %}
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" href="{% url 'Login' %}">Login</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        {% if is_authenticated %}
+                            <span>Welcome {{ username }}!</span>
+                        {% endif %}
+                    </div>
+
+                {% endwith %}
+                {% endwith %}
+            </nav>
+        </header>
+
+        <div class="container">
+            <main role="main" class="pb-3">
+                {% block content %}
+                {% endblock content %}
+            </main>
+        </div>
+    </body>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - Tailspin AnimalAdoption Agency
+        </div>
+    </footer>
+
+    <script src="{% static 'adoptionsite/libs/jquery/distr/jquery.min.js' %}"></script>
+    <script src="{% static 'adoptionsite/libs/bootstrap/distr/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'adoptionsite/site.js' %}" asp-append-version="true"></script>
+</html>

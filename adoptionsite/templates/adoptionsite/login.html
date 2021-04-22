@@ -1,0 +1,49 @@
+{% extends "adoptionsite/base_template.html" %}
+
+{% block title %}
+    Login
+{% endblock title %}
+
+{% block content %}
+    <h1>Log in</h1>
+
+    {% if login_ids %}
+        {% load static %}
+
+        <h5>
+            Enter the password then click on your avatar to proceed.
+        </h5>
+
+        <form action="{% url 'PerformLogin' %}" method="post">
+            {% csrf_token %}
+
+            <div class="container">
+                <div class="row">
+                    <input for="Password" type="password" name="password" placeholder="password" />
+                </div>
+
+                {% if error_message %}
+                    <div class="row text-danger">
+                        <strong>
+                            {{ error_message }}
+                        </strong>
+                    </div>
+                {% endif %}
+
+                <div class="row">
+                    {% for login_id in login_ids %}
+                        <div class="col-sm-4 auth-button-grid">
+                            <button type="submit" class="auth-button" name="AvatarId" value="{{ login_id }}">
+                                <img src="{% static 'adoptionsite/images/auth/'|add:login_id|add:'.jpg' %}" alt="{{ login_id }}" />
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </form>
+    {% else %}
+        <p>
+            No login ids were provided
+        </p>
+    {% endif %}
+{% endblock content %}

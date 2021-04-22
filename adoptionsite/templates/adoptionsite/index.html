@@ -1,0 +1,53 @@
+{% extends "adoptionsite/base_template.html" %}
+
+{% block title %}
+    Home
+{% endblock title %}
+
+{% block content %}
+    <div>
+        <h1>Animal Information</h1>
+        <table class='table table-striped'>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Age</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if available_animals %}
+                    {% load static %}
+
+                    {% for animal in available_animals %}
+                        {% with animal.id|stringformat:"s" as animal_id %}
+                            {% with ''|add:animal_id|add:'.jpg' as animal_image %}
+
+                                <tr key={{ animal_id }}>
+                                    <td>
+                                        {{ animal_id }}
+                                    </td>
+                                    <td>
+                                        {{ animal.name }}
+                                    </td>
+                                    <td>
+                                        {{ animal.description }}
+                                    </td>
+                                    <td>
+                                        {{ animal.age }}
+                                    </td>
+                                    <td>
+                                        <img src="{% static 'adoptionsite/images/pets/'|add:animal_image %}" alt="{{ animal_id }}" height="100px" width="100px" />
+                                    </td>
+                                </tr>
+                                
+                            {% endwith %}
+                        {% endwith %}
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
