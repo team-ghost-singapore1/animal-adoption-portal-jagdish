@@ -13,6 +13,25 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
+# from azure.keyvault.secrets import SecretClient
+# from azure.identity import DefaultAzureCredential
+
+
+# # Start Key Vault
+# keyVaultName = os.environ["Django__KeyVaultName"]
+# KVUri = f"https://{keyVaultName}.vault.azure.net"
+
+# credential = DefaultAzureCredential()
+# client = SecretClient(vault_url=KVUri, credential=credential)
+
+# # These string values should match the name of your secrets in the Key Vault
+# postgresql_username = client.get_secret('POSTGRESQL-Username').value
+# postgresql_password = client.get_secret('POSTGRESQL-Password').value
+# postgresql_host_name = client.get_secret('POSTGRESQL-HostName').value
+# postgresql_database_name = client.get_secret('POSTGRESQL-DatabaseName').value
+# # End Key Vault
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -90,6 +109,8 @@ DATABASES = {
     }
 }
 
+
+# # Start PostgreSQL
 # # Uncomment this and fill in the details to use a PostgreSQL database
 # # Make sure that you remove the SQL lite definition above once you have done this
 # DATABASES = {
@@ -105,6 +126,26 @@ DATABASES = {
 #         },
 #     }
 # }
+# # End PostgreSQL
+
+
+# # Start Key Vault
+# # Don't forget to remove the declaration above once you have integrated Key Vault
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': f'{postgresql_database_name}',
+#         'USER': f'{postgresql_username}@{postgresql_host_name}',
+#         'PASSWORD': f'{postgresql_password}',
+#         'HOST': f'{postgresql_host_name}.postgres.database.azure.com',
+#         'PORT': '5432',
+#         'OPTIONS': {
+#             'sslmode': 'require'
+#         },
+#     }
+# }
+# # End Key Vault
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
