@@ -1,19 +1,38 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login as auth_login
+import pandas
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-import pandas
+from django.shortcuts import redirect, render
 
-from adoptionsite.models import CartItem, Animal
+from adoptionsite.models import Animal, CartItem
 
 login_ids = [ 'pencil', 'flower', 'icecream', 'basketball', 'orange', 'placeholder' ]
 
 # Initial load of animals
 available_animals = []
+
+# Load animals from CSV
 animals_df = pandas.read_csv('animals.csv', index_col='Id')
 
 for animal in animals_df.itertuples():
     available_animals.append(Animal(id=animal.Index, name=animal.Name, description=animal.Description, age=animal.Age))
+
+# # Uncomment this and fill in the details to load the animals from Mongo DB
+# # Don't forget to remove the code above that is no longer required and the pandas
+# # package can also be removed from the requirements.txt file
+# mongo_db_uri = 'mongodb://<resource-name>:<primary-password>@<host>:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@<resource-name>@'
+# mongo_client = pymongo.MongoClient(mongo_db_uri)
+
+# # This is your database name (TAA_Portal)
+# mongo_db = mongo_client.TAA_Portal
+
+# # This is your collection name (AvailableAnimals)
+# mongodb_animals = mongo_db.AvailableAnimals
+
+# for animal in mongodb_animals.find():
+#     available_animals.append(Animal(id=animal['id'], name=animal['name'], description=animal['description'], age=animal['age']))
+
 
 cart_items = [
     CartItem(id=0, quantity=0, name=available_animals[0].name),
