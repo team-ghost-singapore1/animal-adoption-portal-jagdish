@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -82,6 +82,7 @@ AUTHENTICATION_BACKENDS = [
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# Use local SQLite database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -89,6 +90,21 @@ DATABASES = {
     }
 }
 
+# Uncomment this and fill in the details to use a PostgreSQL database
+# Make sure that you remove the SQL lite definition above once you have done this
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'taa_portal',
+#         'USER': 'user@hostname',
+#         'PASSWORD': 'redacted',
+#         'HOST': '<hostname>.postgres.database.azure.com',
+#         'PORT': '5432',
+#         'OPTIONS': {
+#             'sslmode': 'require'
+#         },
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
