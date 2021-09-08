@@ -90,8 +90,8 @@ DATABASES = {
     }
 }
 
-# Uncomment this and fill in the details to use a PostgreSQL database
-# Make sure that you remove the SQL lite definition above once you have done this
+# # Uncomment this and fill in the details to use a PostgreSQL database
+# # Make sure that you remove the SQL lite definition above once you have done this
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
