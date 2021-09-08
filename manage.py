@@ -6,7 +6,11 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'azuresite.development_settings')
+    # WEBSITE_HOSTNAME is a special environment variable set by Azure,
+    # you can read more here https://docs.microsoft.com/en-us/azure/app-service/configure-language-python#production-settings-for-django-apps
+    settings_module = 'azuresite.production_settings' if 'WEBSITE_HOSTNAME' in os.environ else 'azuresite.development_settings'
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
