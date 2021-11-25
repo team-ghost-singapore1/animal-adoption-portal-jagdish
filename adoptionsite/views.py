@@ -17,25 +17,13 @@ login_ids = [ 'pencil', 'flower', 'icecream', 'basketball', 'orange', 'placehold
 # Initial load of animals
 available_animals = []
 
+# Start load from CSV
 # Load animals from CSV
 animals_df = pandas.read_csv('animals.csv', index_col='Id')
 
 for animal in animals_df.itertuples():
     available_animals.append(Animal(id=animal.Index, name=animal.Name, description=animal.Description, age=animal.Age))
-
-# # Start Key Vault
-# # Uncomment this and fill out the details to integrate with Azure Key Vaulkt
-# # You will need to set environment variables for Django__KeyVaultName and Django__Debug
-# # as part of this task too, don't forget to tidy up any duplicate declarations!
-# keyVaultName = os.environ["Django__KeyVaultName"]
-# KVUri = f"https://{keyVaultName}.vault.azure.net"
-
-# credential = DefaultAzureCredential()
-
-# mongo_db_connection_string = client.get_secret('MONGODB-ConnectionString').value
-# mongo_client = pymongo.MongoClient(mongo_db_connection_string)
-# # End Key Vault
-
+# End load from CSV  
 
 # # Start Mongo DB
 # # Uncomment this and fill in the details to load the animals from Mongo DB
@@ -51,8 +39,21 @@ for animal in animals_df.itertuples():
 # mongodb_animals = mongo_db.AvailableAnimals
 
 # for animal in mongodb_animals.find():
-#     available_animals.append(Animal(id=animal['id'], name=animal['name'], description=animal['description'], age=animal['age']))
+#     available_animals.append(Animal(id=animal['_id'], name=animal['name'], description=animal['description'], age=animal['age']))
 # # End Mongo DB
+
+# # Start Key Vault
+# # Uncomment this and fill out the details to integrate with Azure Key Vault
+# # You will need to set environment variables for Django__KeyVaultName and Django__Debug
+# # as part of this task too, don't forget to tidy up any duplicate declarations!
+# keyVaultName = os.environ["Django__KeyVaultName"]
+# KVUri = f"https://{keyVaultName}.vault.azure.net"
+
+# credential = DefaultAzureCredential()
+
+# mongo_db_connection_string = client.get_secret('MONGODB-ConnectionString').value
+# mongo_client = pymongo.MongoClient(mongo_db_connection_string)
+# # End Key Vault
 
 cart_items = [
     CartItem(id=0, quantity=0, name=available_animals[0].name),
