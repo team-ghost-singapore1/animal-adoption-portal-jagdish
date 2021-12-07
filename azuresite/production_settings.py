@@ -10,18 +10,19 @@ from .development_settings import *
 
 
 # # Start Key Vault
-# keyVaultName = os.environ["Django__KeyVaultName"]
-# KVUri = f"https://{keyVaultName}.vault.azure.net"
+# key_vault_name = os.environ["Django__KeyVaultName"]
+# key_vault_uri = f"https://{key_vault_name}.vault.azure.net"
 
+# # See here for more information https://docs.microsoft.com/en-us/python/api/overview/azure/identity-readme?view=azure-python#defaultazurecredential
 # credential = DefaultAzureCredential()
-# client = SecretClient(vault_url=KVUri, credential=credential)
+# key_vault_client = SecretClient(vault_url=key_vault_uri, credential=credential)
 
 # # These string values should match the name of your secrets in the Key Vault
-# django_secret_key = client.get_secret('DJANGO-SecretKey').value
-# postgresql_username = client.get_secret('POSTGRESQL-Username').value
-# postgresql_password = client.get_secret('POSTGRESQL-Password').value
-# postgresql_host_name = client.get_secret('POSTGRESQL-HostName').value
-# postgresql_database_name = client.get_secret('POSTGRESQL-DatabaseName').value
+# django_secret_key = key_vault_client.get_secret('DJANGO-SecretKey').value
+# postgresql_username = key_vault_client.get_secret('POSTGRESQL-Username').value
+# postgresql_password = key_vault_client.get_secret('POSTGRESQL-Password').value
+# postgresql_host_name = key_vault_client.get_secret('POSTGRESQL-HostName').value
+# postgresql_database_name = key_vault_client.get_secret('POSTGRESQL-DatabaseName').value
 # # End Key Vault
 
 
@@ -63,23 +64,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-# Fill out the correct details here, but DO NOT commit them to source control
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'taa_portal',
-        'USER': 'user@hostname',
-        'PASSWORD': 'redacted',
-        'HOST': '<hostname>.postgres.database.azure.com',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require'
-        },
-    }
-}
-
-
-# # Start Key Vault
+# # Start PostgreSQL
+# # Uncomment this and read in the details from your Key Vault variables to connect to PostgreSQL
 # # Don't forget to remove the declaration above once you have integrated Key Vault
 # DATABASES = {
 #     'default': {
@@ -94,7 +80,7 @@ DATABASES = {
 #         },
 #     }
 # }
-# # End Key Vault
+# # End PostgreSQL
 
 
 # Get these paths from the deployment logs

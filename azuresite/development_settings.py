@@ -18,17 +18,18 @@ from pathlib import Path
 
 
 # # Start Key Vault
-# keyVaultName = os.environ["Django__KeyVaultName"]
-# KVUri = f"https://{keyVaultName}.vault.azure.net"
+# key_vault_name = os.environ["Django__KeyVaultName"]
+# key_vault_uri = f"https://{key_vault_name}.vault.azure.net"
 
+# # See here for more information https://docs.microsoft.com/en-us/python/api/overview/azure/identity-readme?view=azure-python#defaultazurecredential
 # credential = DefaultAzureCredential()
-# client = SecretClient(vault_url=KVUri, credential=credential)
+# key_vault_client = SecretClient(vault_url=key_vault_uri, credential=credential)
 
 # # These string values should match the name of your secrets in the Key Vault
-# postgresql_username = client.get_secret('POSTGRESQL-Username').value
-# postgresql_password = client.get_secret('POSTGRESQL-Password').value
-# postgresql_host_name = client.get_secret('POSTGRESQL-HostName').value
-# postgresql_database_name = client.get_secret('POSTGRESQL-DatabaseName').value
+# postgresql_username = key_vault_client.get_secret('POSTGRESQL-Username').value
+# postgresql_password = key_vault_client.get_secret('POSTGRESQL-Password').value
+# postgresql_host_name = key_vault_client.get_secret('POSTGRESQL-HostName').value
+# postgresql_database_name = key_vault_client.get_secret('POSTGRESQL-DatabaseName').value
 # # End Key Vault
 
 
@@ -111,26 +112,8 @@ DATABASES = {
 
 
 # # Start PostgreSQL
-# # Uncomment this and fill in the details to use a PostgreSQL database
-# # Make sure that you remove the SQL lite definition above once you have done this
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'taa_portal',
-#         'USER': 'user@hostname',
-#         'PASSWORD': 'redacted',
-#         'HOST': '<hostname>.postgres.database.azure.com',
-#         'PORT': '5432',
-#         'OPTIONS': {
-#             'sslmode': 'require'
-#         },
-#     }
-# }
-# # End PostgreSQL
-
-
-# # Start Key Vault
-# # Don't forget to remove the declaration above once you have integrated Key Vault
+# # Uncomment this and read in the details from your Key Vault variables to connect to PostgreSQL
+# # MAKE SURE THAT YOUR REMOVE THE SQL LITE DEFINITION ABOVE ONCE YOU ADD POSTGRESQL SUPPORT
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -144,7 +127,7 @@ DATABASES = {
 #         },
 #     }
 # }
-# # End Key Vault
+# # End PostgreSQL
 
 
 # Password validation
