@@ -55,9 +55,9 @@ jobs:
           path: .
           
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v2
+        uses: azure/s-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'ghost1webapp'
+          app-name: 'webappjsr'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_436DB4E54DA94E349A714857FFABB944 }}
